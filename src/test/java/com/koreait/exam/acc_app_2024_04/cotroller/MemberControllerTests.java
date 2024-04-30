@@ -1,4 +1,4 @@
-package com.koreait.exam.acc_app_2024_04.cotroller;
+package com.koreait.exam.acc_app_2024_04.controller;
 
 import com.koreait.exam.acc_app_2024_04.app.member.controller.MemberController;
 import com.koreait.exam.acc_app_2024_04.app.member.service.MemberService;
@@ -36,15 +36,15 @@ public class MemberControllerTests {
     void t1() throws Exception {
         // WHEN
         ResultActions resultActions = mvc
-                .perform(get("/member/join"))
-                .andDo(print());
+            .perform(get("/member/join"))
+            .andDo(print());
 
         // THEN
         resultActions
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(handler().handlerType(MemberController.class))
-                .andExpect(handler().methodName("showJoin"))
-                .andExpect(content().string(containsString("회원가입")));
+            .andExpect(status().is2xxSuccessful())
+            .andExpect(handler().handlerType(MemberController.class))
+            .andExpect(handler().methodName("showJoin"))
+            .andExpect(content().string(containsString("회원가입")));
     }
 
     @Test
@@ -52,20 +52,20 @@ public class MemberControllerTests {
     void t2() throws Exception {
         // WHEN
         ResultActions resultActions = mvc
-                .perform(post("/member/join")
-                        .with(csrf())
-                        .param("username", "user999")
-                        .param("password", "1234")
-                        .param("email", "user999@test.com")
-                )
-                .andDo(print());
+            .perform(post("/member/join")
+                .with(csrf())
+                .param("username", "user999")
+                .param("password", "1234")
+                .param("email", "user999@test.com")
+            )
+            .andDo(print());
 
         // THEN
         resultActions
-                .andExpect(status().is3xxRedirection())
-                .andExpect(handler().handlerType(MemberController.class))
-                .andExpect(handler().methodName("join"))
-                .andExpect(redirectedUrlPattern("/member/login?msg=**"));
+            .andExpect(status().is3xxRedirection())
+            .andExpect(handler().handlerType(MemberController.class))
+            .andExpect(handler().methodName("join"))
+            .andExpect(redirectedUrlPattern("/member/login?msg=**"));
 
         assertThat(memberService.findByUsername("user999").isPresent()).isTrue();
     }

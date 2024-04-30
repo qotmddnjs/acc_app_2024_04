@@ -1,4 +1,4 @@
-package com.koreait.exam.acc_app_2024_04.cotroller;
+package com.koreait.exam.acc_app_2024_04.controller;
 
 import com.koreait.exam.acc_app_2024_04.app.song.controller.SongController;
 import com.koreait.exam.acc_app_2024_04.app.song.entity.Song;
@@ -39,17 +39,17 @@ public class SongControllerTests {
     void t1() throws Exception {
         // WHEN
         ResultActions resultActions = mvc
-                .perform(
-                        get("/song/create")
-                )
-                .andDo(print());
+            .perform(
+                get("/song/create")
+            )
+            .andDo(print());
 
         // THEN
         resultActions
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(handler().handlerType(SongController.class))
-                .andExpect(handler().methodName("showCreate"))
-                .andExpect(content().string(containsString("음원 업로드")));
+            .andExpect(status().is2xxSuccessful())
+            .andExpect(handler().handlerType(SongController.class))
+            .andExpect(handler().methodName("showCreate"))
+            .andExpect(content().string(containsString("음원 업로드")));
     }
 
     @Test
@@ -58,19 +58,19 @@ public class SongControllerTests {
     void t2() throws Exception {
         // WHEN
         ResultActions resultActions = mvc
-                .perform(post("/song/create")
-                        .param("subject", "제목")
-                        .param("content", "내용")
-                        .with(csrf())
-                )
-                .andDo(print());
+            .perform(post("/song/create")
+                .param("subject", "제목")
+                .param("content", "내용")
+                .with(csrf())
+            )
+            .andDo(print());
 
         // THEN
         resultActions
-                .andExpect(status().is3xxRedirection())
-                .andExpect(handler().handlerType(SongController.class))
-                .andExpect(handler().methodName("create"))
-                .andExpect(redirectedUrlPattern("/song/**"));
+            .andExpect(status().is3xxRedirection())
+            .andExpect(handler().handlerType(SongController.class))
+            .andExpect(handler().methodName("create"))
+            .andExpect(redirectedUrlPattern("/song/**"));
 
         Long songId = Long.valueOf(resultActions.andReturn().getResponse().getRedirectedUrl().replace("/song/", "").split("\\?", 2)[0]);
         assertThat(songService.findById(songId).isPresent()).isTrue();
@@ -82,15 +82,15 @@ public class SongControllerTests {
     void t3() throws Exception {
         // WHEN
         ResultActions resultActions = mvc
-                .perform(get("/song/1/modify"))
-                .andDo(print());
+            .perform(get("/song/1/modify"))
+            .andDo(print());
 
         // THEN
         resultActions
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(handler().handlerType(SongController.class))
-                .andExpect(handler().methodName("showModify"))
-                .andExpect(content().string(containsString("음원 수정")));
+            .andExpect(status().is2xxSuccessful())
+            .andExpect(handler().handlerType(SongController.class))
+            .andExpect(handler().methodName("showModify"))
+            .andExpect(content().string(containsString("음원 수정")));
     }
 
     @Test
@@ -99,19 +99,19 @@ public class SongControllerTests {
     void t4() throws Exception {
         // WHEN
         ResultActions resultActions = mvc
-                .perform(post("/song/1/modify")
-                        .param("subject", "제목1 NEW")
-                        .param("content", "내용1 NEW")
-                        .with(csrf())
-                )
-                .andDo(print());
+            .perform(post("/song/1/modify")
+                .param("subject", "제목1 NEW")
+                .param("content", "내용1 NEW")
+                .with(csrf())
+            )
+            .andDo(print());
 
         // THEN
         resultActions
-                .andExpect(status().is3xxRedirection())
-                .andExpect(handler().handlerType(SongController.class))
-                .andExpect(handler().methodName("modify"))
-                .andExpect(redirectedUrlPattern("/song/**"));
+            .andExpect(status().is3xxRedirection())
+            .andExpect(handler().handlerType(SongController.class))
+            .andExpect(handler().methodName("modify"))
+            .andExpect(redirectedUrlPattern("/song/**"));
 
         Long songId = Long.valueOf(resultActions.andReturn().getResponse().getRedirectedUrl().replace("/song/", "").split("\\?")[0]);
 

@@ -1,6 +1,5 @@
 package com.koreait.exam.acc_app_2024_04.app.base.initData;
 
-import com.koreait.exam.acc_app_2024_04.app.cart.entity.CartItem;
 import com.koreait.exam.acc_app_2024_04.app.cart.service.CartService;
 import com.koreait.exam.acc_app_2024_04.app.member.entity.Member;
 import com.koreait.exam.acc_app_2024_04.app.member.service.MemberService;
@@ -73,6 +72,14 @@ public interface InitDataBefore {
 
         // 3번 주문 : 결제 전
         Order order3 = helper.order(member2, Arrays.asList(product1, product2));
+
+        // 장바구니
+        cartService.addItem(member1, product1);
+        cartService.addItem(member1, product2);
+        cartService.addItem(member1, product3);
+
+        cartService.addItem(member2, product4);
+        cartService.addItem(member2, product5);
 
     }
 }
